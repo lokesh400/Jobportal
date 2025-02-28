@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require('../models/User');
 const Worker = require('../models/Worker');
+const Certificate = require('../models/Certificates');
+const Job = require("../models/Job"); // Import the Job model
 
 const multer = require("multer");
 const path = require("path");
@@ -64,10 +66,41 @@ function ensureAuthenticated(req, res, next) {
 }
   
 // // Signup route
-// router.get('/worker/index', (req, res) => {
-//     req.flash('error_msg', 'Hello Dear');
-//     res.render("employee/workerIndex.ejs");
-// });
+router.get('/worker/index', async (req, res) => { 
+  req.flash('error_msg', 'Hello Dear');
+  const id = req.user.id;
+  try {
+      const mail = await User.findById(id);
+      const worker = await Worker.findOne({ email: mail.email });
+      if (!worker) {
+          req.flash('error_msg', 'Worker not found');
+          return res.redirect('/');
+      }
+      // Fetch certificates of the worker
+      const certificates = await Certificate.find({ workerId: worker._id })
+      res.render("employee/workerIndex.ejs", { worker, certificates });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Server Error");
+  }
+});
+
+//Particular certificate
+router.get("/certificate/:id", async (req, res) => {
+  try {
+      const certificate = await Certificate.findById(req.params.id).populate("workerId postId");
+
+      if (!certificate) {
+          return res.status(404).send("Certificate not found");
+      }
+
+      res.render("employee/certificateDetails.ejs", { certificate });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Server Error");
+  }
+});
+
 
 router.get('/employer/signup', (req, res) => {
   req.flash('error_msg', 'Hello Dear');

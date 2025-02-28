@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Thekedar = require('../models/Thekedar');
 const Worker = require("../models/Worker");
-const Worker = require("../models/Worker");
+const Certificate = require("../models/Certificates");
 
 
 const multer = require("multer");
@@ -226,21 +226,25 @@ router.post("/thekedar/:id/projects/add", async (req, res) => {
 router.post("/change/order/status/:projectId/:thekedarId", async (req, res) => {
     try {
         const { projectId, thekedarId } = req.params;
-        // Update Project's isCompleted Status
+
+        // ✅ Step 1: Find Thekedar and Update Project Status
         const updatedThekedar = await Thekedar.findOneAndUpdate(
             { _id: thekedarId, "projects._id": projectId },
             { $set: { "projects.$.isCompleted": "yes" } },
             { new: true, runValidators: true }
         );
+
         if (!updatedThekedar) {
             return res.status(404).json({ success: false, message: "Thekedar or Project not found" });
         }
-        // Find the Project
+
+        // ✅ Step 2: Find the Completed Project
         const project = updatedThekedar.projects.find(p => p._id.toString() === projectId);
         if (!project) {
             return res.status(404).json({ success: false, message: "Project not found" });
         }
-        // Generate Certificate for Thekedar
+
+        // ✅ Step 3: Generate & Save Certificate for Thekedar
         const thekedarCertificate = new Certificate({
             workerId: thekedarId,  // Thekedar treated as workerId here
             name: updatedThekedar.name,
@@ -248,28 +252,39 @@ router.post("/change/order/status/:projectId/:thekedarId", async (req, res) => {
             startingDate: project.createdAt,
             endingDate: new Date() // Completion date
         });
+
         await thekedarCertificate.save();
-        //Fetch Worker Details Asynchronously
-        const workerCertificates = await Promise.all(
-            project.thisProjectWorkers.map(async (workerId) => {
-                const worker = await Worker.findById(workerId);
-                return {
-                    workerId,
-                    name: worker ? worker.name : "Unknown Worker", // Get worker name or set a default
-                    postId: projectId,
-                    startingDate: project.createdAt,
-                    endingDate: new Date()
-                };
-            })
-        );
-        //Save Worker Certificates
-        await Certificate.insertMany(workerCertificates);
+
+        // ✅ Step 4: Update Workers' Project History & Generate Their Certificates
+        const workerIds = project.thisProjectWorkers;
+
+        // Fetch worker details and create certificates
+        const workerCertificates = await Promise.all(workerIds.map(async (workerId) => {
+            const worker = await Worker.findById(workerId);
+            if (!worker) return null; // Skip if worker not found
+
+            // Add project details to worker's project history
+            worker.projects.push(project);
+            await worker.save();
+
+            return {
+                workerId,
+                name: worker.name,
+                postId: projectId,
+                startingDate: project.createdAt,
+                endingDate: new Date()
+            };
+        }));
+
+        const validCertificates = workerCertificates.filter(cert => cert !== null);
+        await Certificate.insertMany(validCertificates);
         res.status(200).json({
             success: true,
-            message: "Project marked as completed, certificates generated",
+            message: "Project marked as completed, workers updated, and certificates generated",
             thekedarCertificate,
-            workerCertificates
+            workerCertificates: validCertificates
         });
+
     } catch (error) {
         console.error("Error updating project and generating certificates:", error);
         res.status(500).json({ success: false, message: "Internal Server Error" });

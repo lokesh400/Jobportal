@@ -63,6 +63,13 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/login');
 }
   
+
+//create new Opening
+router.get('/admin', (req, res) => {
+  req.flash('error_msg', 'Hello Dear');
+  res.render("employer/adminIndex.ejs");
+});
+
 // Signup route
 router.get('/worker/index', (req, res) => {
     req.flash('error_msg', 'Hello Dear');
@@ -75,13 +82,12 @@ router.get('/employer/signup', (req, res) => {
 });
 
 
-router.post("/signup/employer", async (req, res, next) => {
+router.post("/signup/new/employer", async (req, res, next) => {
   try {
     const { name, email, password, mobile, company, address,pincode,photo } = req.body;
     const username = email;
-    const employer = new User({ name, email, username, contactNumber, role: "admin" });
-    const worker = new Employer({ name, email, mobile, address, pincode,photo,company  });
-    await worker.save()
+    const employer = new User({ name, email, username, contactNumber:mobile, role: "admin" });
+     new Employer({ name, email, mobile, address, pincode,photo,company  }).save();
     await User.register(employer, password);
     req.login(employer, (err) => {
       if (err) {
@@ -93,6 +99,38 @@ router.post("/signup/employer", async (req, res, next) => {
   } catch (error) {
     console.error("Signup error:", error);
     res.status(500).send(error);
+  }
+});
+
+//create new Opening
+router.get('/new/opening', (req, res) => {
+  req.flash('error_msg', 'Hello Dear');
+  res.render("employer/createJob.ejs");
+});
+
+router.post("/create/new/opening", ensureAuthenticated, async (req, res) => {
+  try {
+      const { title, description, location, pincode } = req.body;
+      const user = await User.findById(req.user.id);
+      const mail = user.email;
+      const creater = await Employer.findOne({email:mail})
+      // Create a new job instance
+      const newJob = new Job({
+          title,
+          description,
+          employerId:creater.id,
+          location,
+          pincode,
+          mobile:creater.mobile,
+      });
+
+      // Save job to database
+      await newJob.save();
+      
+      res.status(201).json({ message: "Job posted successfully!", job: newJob });
+  } catch (error) {
+      console.error("Error creating job:", error);
+      res.status(500).json({ error: "Server error. Please try again later." });
   }
 });
 

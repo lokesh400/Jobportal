@@ -9,7 +9,7 @@ const employerSchema = new mongoose.Schema(
     pincode: {type:String, required:true},
     photo:{type:String, required:true},
     company:{type:String, required:true},
-    projects:[],
+    jobs:[],
   },
   { timestamps: true }
 ); //timestamp true krn se created at , updated at , etc functionalities kaam krn lgti h

@@ -4,20 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Worker Dashboard</title>
-    <link rel="stylesheet" href="/styles/worker.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <h1>Welcome, Worker</h1>
-        <nav>
-            <a href="/worker/jobs">Available Jobs</a>
-            <a href="/worker/profile">My Profile</a>
-            <a href="/logout">Logout</a>
-        </nav>
-    </header>
-    <main>
-        <h2>Find Jobs & Track Work</h2>
-        <p>Browse job listings, apply for work, and update your profile.</p>
-    </main>
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto mt-10 bg-white p-6 shadow-lg rounded-lg">
+        <h1 class="text-2xl font-bold mb-4">Welcome, <%= worker.name %>!</h1>
+        
+        <h2 class="text-xl font-semibold mt-6 mb-2">Your Certificates</h2>
+        <% if (certificates.length === 0) { %>
+            <p class="text-gray-600">No certificates found.</p>
+        <% } else { %>
+            <ul class="divide-y divide-gray-300">
+                <% certificates.forEach(cert => { %>
+                    <li class="py-3 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-lg font-semibold"><%= cert.name %></h2>
+                            <p class="text-sm text-gray-600">Job: <%= cert.postId.title %></p>
+                            <p class="text-sm text-gray-600">Start: <%= cert.startingDate.toDateString() %> | End: <%= cert.endingDate.toDateString() %></p>
+                        </div>
+                        <a href="/certificate/<%= cert._id %>" class="text-blue-500 hover:underline">View Certificate</a>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
 </body>
 </html>
