@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>403 Access Forbidden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">    
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius='small'></script>
+</head>
+<body class="bg-gray-50 font-['Inter']">
+    <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-8xl w-full text-center">            <div class="mb-8">
+                <i class="fa-solid fa-lock text-8xl text-custom mb-4"></i>
+                <h1 class="text-9xl font-bold text-custom mb-4">403</h1>
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Access Forbidden</h2>
+                <p class="text-xl text-gray-600 mb-4">Administrator Access Only</p>
+                <p class="text-gray-500 max-w-2xl mx-auto mb-8">
+                    This page is restricted to authorized administrators. You do not have sufficient permissions to access this area.
+                </p>            
+            </div>
+            
+            <div class="flex justify-center gap-4 mb-12">
+                <a href="/" class="!rounded-button bg-custom hover:bg-custom/90 text-white px-6 py-3 font-medium">                    
+                    <i class="fa-solid fa-home mr-2"></i>Return to Homepage
+                </a>
+                <a href="/contact" class="!rounded-button border-2 border-custom text-custom hover:bg-gray-50 px-6 py-3 font-medium">                   
+                     <i class="fa-solid fa-envelope mr-2"></i>
+                     Contact Administrator
+                </a>
+            </div>
+            
+            <div class="text-sm text-gray-400">                
+                <p>Error Reference: #ERR-403-89271</p>
+                <p>Timestamp: <span id="timestamp"></span></p>
+            </div>        </div>
+    </div>
+
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    </script></body>
+</html>

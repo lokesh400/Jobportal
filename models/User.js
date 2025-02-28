@@ -5,12 +5,6 @@ const UserSchema = new mongoose.Schema({
   name:{
     type:String,
   },
-  contactNumber:{
-    type:Number,
-  },
-  role:{
-    type:String
-  },
   email:{
     type:String,
     required:true,
@@ -18,7 +12,13 @@ const UserSchema = new mongoose.Schema({
   username:{
     type:String,
     required:true,
-  }
+  },
+  contactNumber:{
+    type:Number,
+  },
+  role:{
+    type:String
+  },
 });
 
 UserSchema.plugin(passportLocalMongoose);

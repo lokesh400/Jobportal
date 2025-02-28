@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labor Stability Initiative</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+            overflow-x: hidden;
+        }
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            z-index: 1000;
+            text-align: center;
+        }
+        .sticky-header a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .feature-card {
+            background: #222;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <div class="sticky-header">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </div>
+    
+    <div class="container-fluid">
+        <!-- Hero Section -->
+        <div class="section hero" data-aos="fade-up">
+            <h1 class="display-5 fw-bold text-primary">Solving Unskilled Labor Instability</h1>
+            <p class="mt-3">A tech-driven platform enhancing job stability, accountability, and transparency.</p>
+            <a href="#features" class="btn btn-primary mt-4">Explore Features</a>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="section" id="features">
+            <div class="container">
+                <h2 class="text-primary mb-4" data-aos="fade-down">Key Features</h2>
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
+                        <div class="feature-card text-center p-4">
+                            <div class="fs-1 text-primary">🚀</div>
+                            <h4 class="mt-3">AI-Powered Job Matching</h4>
+                            <p class="text-muted">Smart matching of workers with employers based on skills and preferences.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-card text-center p-4">
+                            <div class="fs-1 text-primary">🔒</div>
+                            <h4 class="mt-3">Trust & Reputation System</h4>
+                            <p class="text-muted">A blockchain-based credibility system to track work history.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-card text-center p-4">
+                            <div class="fs-1 text-primary">📚</div>
+                            <h4 class="mt-3">Skill Development Programs</h4>
+                            <p class="text-muted">Providing on-the-job training and certifications for career growth.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="600">
+                        <div class="feature-card text-center p-4">
+                            <div class="fs-1 text-primary">💰</div>
+                            <h4 class="mt-3">Financial Security</h4>
+                            <p class="text-muted">Salary advances, microloans, and insurance for unskilled workers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="section bg-dark" id="about" data-aos="fade-right">
+            <div class="container">
+                <h2 class="text-primary">About Our Initiative</h2>
+                <p class="mt-3">We aim to provide a digital solution that enhances job security and employer-worker trust.</p>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section" id="contact" data-aos="zoom-in">
+            <div class="container">
+                <h2 class="text-primary">Join Us</h2>
+                <p class="mt-3">Be a part of our movement to improve job stability for unskilled laborers.</p>
+                <a href="#" class="btn btn-success mt-4">Get Involved</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>

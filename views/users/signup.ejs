@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="form-main-div">
+        <form id="form" action="/user/signup" method="POST">
+            <p class="title">Register</p>
+            <p class="message">Signup now and get full access to our content.</p>
+
+            <div id="email-blk">
+                <label> Email </label>
+                <input required placeholder="" type="email" class="input" name="email" id="email">
+            </div>
+
+            <div id="otp-field" style="display: none;">
+                    <label>Enter Email OTP </label>
+                    <input required placeholder="" type="text" class="input" name="otp" id="otp">
+            </div>
+
+            <button type="button" class="send-otp" id="send-otp">Send OTP</button>
+
+            <label> Name </label>
+                <input required placeholder="" type="text" class="input" name="name">
+            
+            <label> Password </label>    
+                <input required placeholder="" type="password" class="input" name="password">
+            
+            <label>Conform Password </label>
+                <input required placeholder="" type="password" class="input" name="confirmpassword">
+            
+                <div id="phone-blk">
+                    <label> Mobile Number </label>
+                    <input required placeholder="" type="Number" class="input" name="contactNumber" id="email">
+                </div>
+           
+            
+            <button type="submit" class="submit" style="display: none;" id="submit-button">Submit</button>
+            
+            <p class="signin">Already have an account? <a href="/user/login">Signin</a></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('send-otp').addEventListener('click', async function() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('Please enter your email address.');
+                return;
+            }
+            
+            try {
+                document.getElementById('send-otp').style.display = 'none';
+                document.getElementById('email-blk').style.display = 'none';
+                document.getElementById('phone-blk').style.display = 'block';
+                document.getElementById('otp-field').style.display = 'block';
+                const response = await fetch('/user/new/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+
+                const result = await response.json();
+                alert(result.message);
+
+                document.getElementById('submit-button').style.display = 'block';
+            } catch (error) {
+                console.error('Error sending OTP:', error);
+                alert('An error occurred while sending OTP.');
+            }
+        });
+
+        setTimeout(() => {
+            const successToast = document.getElementById('successToast');
+            if (successToast) {
+                successToast.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
