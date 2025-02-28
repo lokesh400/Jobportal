@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Labor Stability Initiative</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="medium"></script>
     <style>
         body {
             background-color: #111;
             color: white;
             overflow-x: hidden;
         }
+
         .sticky-header {
             position: fixed;
             top: 0;
@@ -22,12 +29,14 @@
             z-index: 1000;
             text-align: center;
         }
+
         .sticky-header a {
             color: white;
             margin: 0 15px;
             text-decoration: none;
             font-weight: bold;
         }
+
         .section {
             min-height: 100vh;
             display: flex;
@@ -36,72 +45,198 @@
             text-align: center;
             padding: 50px 20px;
         }
+
         .feature-card {
             background: #222;
             border-radius: 10px;
             padding: 20px;
             transition: transform 0.3s;
         }
+
         .feature-card:hover {
             transform: translateY(-10px);
         }
+
+        .testimonial-card {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .bg-custom {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            margin-top: 70px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            padding-bottom: 80px;
+            backdrop-filter: blur(500px);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .moving-ball {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #00aaff, #2575fc);
+            border-radius: 50%;
+            animation: moveAround 8s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes moveAround {
+            0% { top: 5%; left: 5%; }
+            25% { top: 5%; left: 85%; }
+            50% { top: 85%; left: 85%; }
+            75% { top: 85%; left: 5%; }
+            100% { top: 5%; left: 5%; }
+        }
     </style>
 </head>
+
 <body>
     <!-- Sticky Header -->
     <div class="sticky-header">
         <a href="#features">Features</a>
         <a href="#about">About</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#blog">Blog</a>
         <a href="#contact">Contact</a>
     </div>
-    
+
     <div class="container-fluid">
-        <!-- Hero Section -->
-        <div class="section hero" data-aos="fade-up">
-            <h1 class="display-5 fw-bold text-primary">Solving Unskilled Labor Instability</h1>
-            <p class="mt-3">A tech-driven platform enhancing job stability, accountability, and transparency.</p>
-            <a href="#features" class="btn btn-primary mt-4">Explore Features</a>
+       
+        <div class="container-fluid">
+            <!-- Hero Section -->
+            <div class="section hero" data-aos="fade-up">
+                <div class="moving-ball"></div>
+                <h1 class="display-4 fw-bold text-primary">Solving Unskilled Labor Instability</h1>
+                <p class="mt-3">A tech-driven platform enhancing job stability, accountability, and transparency.</p>
+                <a href="#features" class="btn btn-primary mt-4">Explore Features</a>
+            </div>
         </div>
-        
         <!-- Features Section -->
-        <div class="section" id="features">
-            <div class="container">
-                <h2 class="text-primary mb-4" data-aos="fade-down">Key Features</h2>
-                <div class="row">
-                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
-                        <div class="feature-card text-center p-4">
-                            <div class="fs-1 text-primary">🚀</div>
-                            <h4 class="mt-3">AI-Powered Job Matching</h4>
-                            <p class="text-muted">Smart matching of workers with employers based on skills and preferences.</p>
+        <div class="bg-gray-50 py-12 sm:py-16" id="features">
+            <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:text-center">
+                    <h2 class="text-base text-custom font-semibold tracking-wide uppercase" data-aos="fade-down"> Features</h2>
+                    <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">
+                        Smart Solutions for Modern Workforce
+                    </p>
+                </div>
+
+                <div class="mt-10">
+                    <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
+                        <div class="relative" data-aos="fade-up">
+                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
+                                <i class="fas fa-robot text-xl"></i>
+                            </div>
+                            <p class="ml-16 text-lg leading-6 font-medium text-gray-900">AI Matching System</p>
+                            <p class="mt-2 ml-16 text-base text-gray-500">
+                                Smart algorithms match workers with the right opportunities based on skills, location,
+                                and availability.
+                            </p>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="feature-card text-center p-4">
-                            <div class="fs-1 text-primary">🔒</div>
-                            <h4 class="mt-3">Trust & Reputation System</h4>
-                            <p class="text-muted">A blockchain-based credibility system to track work history.</p>
+
+                        <div class="relative" data-aos="fade-up" data-aos-delay="200">
+                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
+                                <i class="fas fa-link text-xl"></i>
+                            </div>
+                            <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Blockchain Verification</p>
+                            <p class="mt-2 ml-16 text-base text-gray-500">
+                                Secure and transparent verification of worker credentials and employment history.
+                            </p>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="400">
-                        <div class="feature-card text-center p-4">
-                            <div class="fs-1 text-primary">📚</div>
-                            <h4 class="mt-3">Skill Development Programs</h4>
-                            <p class="text-muted">Providing on-the-job training and certifications for career growth.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="600">
-                        <div class="feature-card text-center p-4">
-                            <div class="fs-1 text-primary">💰</div>
-                            <h4 class="mt-3">Financial Security</h4>
-                            <p class="text-muted">Salary advances, microloans, and insurance for unskilled workers.</p>
+
+                        <div class="relative" data-aos="fade-up" data-aos-delay="400">
+                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
+                                <i class="fas fa-mobile-alt text-xl"></i>
+                            </div>
+                            <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Mobile Access</p>
+                            <p class="mt-2 ml-16 text-base text-gray-500">
+                                Access the platform anywhere, anytime with our mobile-first approach.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Testimonials Section -->
+        <div class="bg-gray-800 py-12 sm:py-16" id="testimonials">
+            <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:text-center mb-16">
+                    <h2 class="text-base text-custom font-semibold tracking-wide uppercase">Testimonials</h2>
+                    <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-white sm:text-4xl">
+                        What Our Users Say
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <p class="text-lg text-gray-300">"This platform has transformed my job search experience. I found a job that fits my skills perfectly!"</p>
+                        <p class="mt-4 text-sm text-gray-500">- Alex R.</p>
+                    </div>
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                        <p class="text-lg text-gray-300">"The blockchain verification gives me confidence in the hiring process. Highly recommend!"</p>
+                        <p class="mt-4 text-sm text-gray-500">- Maria S.</p>
+                    </div>
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                        <p class="text-lg text-gray-300">"I love the mobile access! I can apply for jobs on the go!"</p>
+                        <p class="mt-4 text-sm text-gray-500">- John D.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Section -->
+        <div class="bg-white py-12 sm:py-16" id="blog">
+            <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:text-center mb-16">
+                    <h2 class="text-base text-custom font-semibold tracking-wide uppercase">Blog</h2>
+                    <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">
+                        Insights and Articles
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="bg -white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up">
+                        <h3 class="text-lg font-semibold">The Future of Work</h3>
+                        <p class="mt-2 text-gray-600">Exploring how technology is reshaping the job market and what it means for workers.</p>
+                        <a href="#" class="text-blue-500 hover:underline mt-4 block">Read More</a>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-lg font-semibold">Building Trust in the Workplace</h3>
+                        <p class="mt-2 text-gray-600">Understanding the importance of transparency and accountability in labor relations.</p>
+                        <a href="#" class="text-blue-500 hover:underline mt-4 block">Read More</a>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-lg font-semibold">Navigating Job Instability</h3>
+                        <p class="mt-2 text-gray-600">Tips and strategies for workers to manage and thrive in an unstable job market.</p>
+                        <a href="#" class="text-blue-500 hover:underline mt-4 block">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- About Section -->
-        <div class="section bg-dark" id="about" data-aos="fade-right">
+        <div class="section bg-dark" id="about" data-aos="fade-right" data-aos-delay="100">
             <div class="container">
                 <h2 class="text-primary">About Our Initiative</h2>
                 <p class="mt-3">We aim to provide a digital solution that enhances job security and employer-worker trust.</p>
@@ -117,6 +252,108 @@
             </div>
         </div>
     </div>
+
+    <footer class="bg-gray-800" data-aos="fade-right">
+        <div class="max-w-8xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8 xl:col-span-1">
+                    <img class="h-10" src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Company name">
+                    <p class="text-gray-300 text-base">Making workforce management smarter, fairer, and more efficient for everyone.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Solutions</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">For Workers</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">For Employers</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Mobile App</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Integrations</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Support</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Help Center</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Documentation</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">API Status</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Contact Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">About</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Blog</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Press</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Careers</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Legal</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Privacy</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Terms</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Cookie Policy</a>
+                                </li>
+                                <li data-aos="fade-right" data-aos-delay="100">
+                                    <a href="#" class="text-base text-gray-300 hover:text-white">Licenses</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8">
+                <p class="text-base text-gray-400 xl:text-center"> &copy; 2024 WorkConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>

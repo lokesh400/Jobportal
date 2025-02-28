@@ -28,15 +28,8 @@ const { error } = require("console");
 
 const sessionOptions = require("./config/sessionConfig");
 
-// const Student = require("./models/Student");
 const User = require("./models/User");
-// const Enquiry = require("./models/Enquiry");
-// const Information = require("./models/Information");
-// const Result = require("./models/Result");
-// const Team = require("./models/Team");
-// const Class = require("./models/Class");
-// const Teacher = require("./models/Teacher");
-// const Message = require("./models/Message"); // Ensure the correct path
+const Message = require("./models/Message"); // Ensure the correct path
 
 // Connect to MongoDB
 mongoose
@@ -91,33 +84,19 @@ function isAdmin(req, res, next) {
   res.render("./error/accessdenied.ejs");
 }
 
-// const studentRoutes = require("./routes/studentRoutes");
-// const teacherRoutes = require("./routes/teacherRoutes");
-// const adminRoutes = require("./routes/admin");
 const userrouter = require("./routes/user.js");
-// const courserouter = require("./routes/courses.js");
-// const examrouter = require("./routes/exam.js");
-// const quizrouter = require("./routes/quiz.js");
-// const otprouter = require("./routes/otp.js");
-// const chatsrouter = require("./routes/chats.js");
+const workerrouter = require("./routes/worker.js");
+const employerrouter = require("./routes/employer.js");
 
-// app.use("/", studentRoutes);
-// app.use("/", teacherRoutes);
-// app.use("/", adminRoutes);
 app.use("/", userrouter);
-// app.use("/", courserouter);
-// app.use("/", examrouter);
-// app.use("/", quizrouter);
-// app.use("/user", otprouter);
-// app.use("/", chatsrouter);
+app.use("/", workerrouter);
+app.use("/", employerrouter);
+
 
 // Home route
 app.get("/", async (req, res) => {
   try {
-    // const information = await Information.findOne();
-    // const result = await Result.find();
-    // const team = await Team.find();
-    // const calendarUpdates = Object.fromEntries(information.updates.calendar);
+    console.log(req.user.role)
     res.render("index");
   } catch (error) {
     console.log(error);
@@ -125,159 +104,68 @@ app.get("/", async (req, res) => {
 });
 
 // Chat Page
-// const users = new Map();
-// app.get("/chat", async (req, res) => {
-//   const users = await User.find();
-//   res.render("chats/chat.ejs", { users, user: req.user });
-// });
+const users = new Map();
+app.get("/chat", async (req, res) => {
+  const users = await User.find();
+  res.render("chats/chat.ejs", { users, user: req.user });
+});
 
-// // Get Previous Messages
-// app.get("/messages/:recipient", async (req, res) => {
-//   if (!req.isAuthenticated())
-//     return res.status(401).json({ error: "Unauthorized" });
-//   const { recipient } = req.params;
-//   const sender = req.user.username;
-//   try {
-//     const messages = await Message.find({
-//       $or: [
-//         { sender: sender, recipient: recipient },
-//         { sender: recipient, recipient: sender },
-//       ],
-//     }).sort({ timestamp: 1 });
-//     res.json(messages);
-//   } catch (err) {
-//     res.status(500).json({ error: "Error loading messages" });
-//   }
-// });
+// Get Previous Messages
+app.get("/messages/:recipient", async (req, res) => {
+  if (!req.isAuthenticated())
+    return res.status(401).json({ error: "Unauthorized" });
+  const { recipient } = req.params;
+  const sender = req.user.username;
+  try {
+    const messages = await Message.find({
+      $or: [
+        { sender: sender, recipient: recipient },
+        { sender: recipient, recipient: sender },
+      ],
+    }).sort({ timestamp: 1 });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ error: "Error loading messages" });
+  }
+});
 
-// // WebSocket Connection
-// io.on("connection", (socket) => {
-//   console.log("A user connected:", socket.id);
+// WebSocket Connection
+io.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
 
-//   // Store user in online users map
-//   socket.on("userConnected", (username) => {
-//     users.set(username, socket.id);
-//     console.log(`${username} is now online`);
-//   });
+  // Store user in online users map
+  socket.on("userConnected", (username) => {
+    users.set(username, socket.id);
+    console.log(`${username} is now online`);
+  });
 
-//   // Private Messaging
-//   socket.on("privateMessage", async ({ sender, recipient, message }) => {
-//     const newMessage = new Message({ sender, recipient, content: message });
-//     await newMessage.save();
+  // Private Messaging
+  socket.on("privateMessage", async ({ sender, recipient, message }) => {
+    const newMessage = new Message({ sender, recipient, content: message });
+    await newMessage.save();
 
-//     console.log(`Message from ${sender} to ${recipient}: ${message}`);
+    console.log(`Message from ${sender} to ${recipient}: ${message}`);
 
-//     // Send message to sender
-//     io.to(users.get(sender)).emit("newMessage", { sender, message });
+    // Send message to sender
+    io.to(users.get(sender)).emit("newMessage", { sender, message });
 
-//     // Send message to recipient if online
-//     if (users.has(recipient)) {
-//       io.to(users.get(recipient)).emit("newMessage", { sender, message });
-//     }
-//   });
+    // Send message to recipient if online
+    if (users.has(recipient)) {
+      io.to(users.get(recipient)).emit("newMessage", { sender, message });
+    }
+  });
 
-//   // Handle User Disconnect
-//   socket.on("disconnect", () => {
-//     for (let [username, id] of users.entries()) {
-//       if (id === socket.id) {
-//         users.delete(username);
-//         console.log(`${username} disconnected`);
-//         break;
-//       }
-//     }
-//   });
-// });
-
-// app.get("/admin", async (req, res) => {
-//   res.render("adminIndex");
-// });
-
-// app.get("/about", (req, res) => {
-//   res.render("about", { title: "About Page" });
-// });
-
-// app.post("/add/new/enquiry", async (req, res) => {
-//   try {
-//     const { name, message, number } = req.body;
-//     const newEnquiry = new Enquiry({
-//       name,
-//       number,
-//       message,
-//     });
-//     await newEnquiry.save();
-//     req.flash("success_msg", "enquiry generated successfully");
-//     res.redirect("/");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-
-// //Admit Card
-
-// app.get("/admitcard", async (req, res) => {
-//   res.render("admitCard");
-// });
-
-// app.post("/add/new/class", async (req, res) => {
-//   try {
-//     const newClass = new Class(req.body);
-//     await newClass.save();
-//     res.status(201).json(newClass);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// });
-
-// app.get("/all/classes", async (req, res) => {
-//   try {
-//     const classes = await Class.find();
-//     res.render("teacher/allClasses.ejs", { classes });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
-
-// app.get("/add/new/class", async (req, res) => {
-//   res.render("teacher/addClass.ejs");
-// });
-
-// app.get("/show/this/class/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const thisClass = await Class.findById(id);
-//     const grade = thisClass.title;
-//     const students = await Student.find({ studentClass: grade });
-//     const teachers = await Teacher.find();
-//     res.render("teacher/thisClass.ejs", { thisClass, students, teachers });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
-
-// app.post("/assign-coordinator/:classId", async (req, res) => {
-//   try {
-//       const { classId } = req.params;
-//       const { coordinatorId } = req.body;
-//       await Class.findByIdAndUpdate(classId, { coordinator: coordinatorId });
-//       res.redirect(`/show/this/class/${classId}`);
-//   } catch (error) {
-//       res.status(500).send(error.message);
-//   }
-// });
-
-// // Add Teachers (Multiple Allowed)
-// app.post("/add-teachers/:classId", async (req, res) => {
-//   try {
-//       const { classId } = req.params;
-//       let { teacherIds } = req.body;
-//       teacherIds = Array.isArray(teacherIds) ? teacherIds : [teacherIds];
-
-//       await Class.findByIdAndUpdate(classId, { $push: { teachers: { $each: teacherIds } } });
-//       res.redirect(`/show/this/class/${classId}`);
-//   } catch (error) {
-//       res.status(500).send(error.message);
-//   }
-// });
+  // Handle User Disconnect
+  socket.on("disconnect", () => {
+    for (let [username, id] of users.entries()) {
+      if (id === socket.id) {
+        users.delete(username);
+        console.log(`${username} disconnected`);
+        break;
+      }
+    }
+  });
+});
 
 // Start server
 server.listen(777, () => console.log("Server running on http://localhost:777"));

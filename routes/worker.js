@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/User');
-// const Student = require('../models/Student');
-const passport = require("passport");
-const nodemailer = require('nodemailer');
-const passportLocalMongoose = require('passport-local-mongoose');
-// const Teacher = require('../models/Teacher')
 
 const multer = require("multer");
 const path = require("path");
@@ -68,9 +63,9 @@ function ensureAuthenticated(req, res, next) {
 }
   
 // Signup route
-router.get('/worker/signup', (req, res) => {
+router.get('/worker/index', (req, res) => {
     req.flash('error_msg', 'Hello Dear');
-    res.render("./users/workerSignup.ejs");
+    res.render("employee/workerIndex.ejs");
 });
 
 router.get('/employer/signup', (req, res) => {
@@ -78,59 +73,6 @@ router.get('/employer/signup', (req, res) => {
   res.render("./users/employerSignup.ejs");
 });
 
-// const { name, email, username, password, contactNumber, company, location } = req.body;
-
-//     const employer = new Employer({ name, email, username, contactNumber, role: "employer", company, location });
-
-// router.post('/signup', async (req, res) => {
-//     const {name,email, password ,confirmpassword,otp,contactNumber} = req.body;
-//     const role = "student";
-//     const username = email;
-//     // let user = await Otp.findOne({ email });
-//     if(password==confirmpassword&&otp==user.otp){
-//         const newUser = new User({name,role, email, username,contactNumber });
-//     try {
-//         // Attempt to register the new user
-//         const registeredUser = await User.register(newUser, password);
-//         //sendimg greeting mail
-//         const transporter = nodemailer.createTransport({
-//             service:'gmail',
-//             host:'smtp.gmail.com',
-//             secure:false,
-//             port:587,
-//             auth:{
-//              user:"lokeshbadgujjar401@gmail.com",
-//              pass:process.env.mailpass
-//             }
-//            });
-        
-//            try{
-//               const mailOptions = await transporter.sendMail({
-//                 from:"lokeshbadgujjar401@gmail.com",
-//                 to: `${email}`,
-//                 subject: 'Welcome to TheTestPulseFamily',
-//                 text: `Dear ${name} welcome to TheTestPulse Family.`,
-//             });
-//         } catch(error){
-//             transporter.sendMail(mailOptions,(error,info)=>{
-//                 if(error){
-//                     console.log(error)
-//                 }
-//                 else{
-//                     console.log(info+response);
-//                 }
-//             })
-//         }
-//         // Redirect to login page after successful registration
-//         res.redirect('/login');
-//     } catch (error) {
-//        res.send(error)
-//     }
-//     }
-//     else{
-//         res.render("./users/signup.ejs", {error : "password do not match"});
-//     } 
-// });
 
 router.post("/signup/employer", async (req, res, next) => {
   try {
