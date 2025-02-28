@@ -87,16 +87,17 @@ function isAdmin(req, res, next) {
 const userrouter = require("./routes/user.js");
 const workerrouter = require("./routes/worker.js");
 const employerrouter = require("./routes/employer.js");
+const thekedarrouter = require("./routes/thekedar.js");
 
 app.use("/", userrouter);
 app.use("/", workerrouter);
 app.use("/", employerrouter);
+app.use("/", thekedarrouter);
 
 
 // Home route
 app.get("/", async (req, res) => {
   try {
-    console.log(req.user.role)
     res.render("index");
   } catch (error) {
     console.log(error);

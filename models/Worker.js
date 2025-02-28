@@ -2,26 +2,29 @@ const mongoose = require("mongoose");
 
 const projectsSchema = new mongoose.Schema(
     {
-      title: {type: String, required:true},
-      address: {type: String , required:true},
-      pincode: {type:String, required:true},
-      photo:{type:String, required:true},
-      description:{type:String, required:true},
+      title: {type: String },
+      address: {type: String },
+      pincode: {type:String },
+      photo:{type:String },
+      description:{type:String },
     },
     { timestamps: true }
   ); //timestamp true krn se created at , updated at , etc functionalities kaam krn lgti h
 
-const LabourSchema = new Schema(
+const WorkerSchema = new mongoose.Schema(
   {
-    name: {type: String , required:true },
-    mobile: {type: String, required:true},
-    address: {type: String , required:true},
-    pincode: {type:String, required:true},
-    photo:{type:String, required:true},
+    name: {type: String },
+    email:{type:String, required:true},
+    mobile: {type: String },
+    address: {type: String },
+    pincode: {type:String },
+    photo:{type:String },
     projects:[projectsSchema],
+    skills:Array,
   },
   { timestamps: true }
 ); //timestamp true krn se created at , updated at , etc functionalities kaam krn lgti h
 
-mongoose.models = {}; //isk bina product cant be overwrite ka error aa jyega
-export default mongoose.model("Labour", LabourSchema);
+const Worker = mongoose.model("Worker", WorkerSchema);
+
+module.exports = Worker;

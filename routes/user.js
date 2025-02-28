@@ -5,7 +5,8 @@ const User = require('../models/User');
 const passport = require("passport");
 const nodemailer = require('nodemailer');
 const passportLocalMongoose = require('passport-local-mongoose');
-// const Teacher = require('../models/Teacher')
+const Worker = require('../models/Worker');
+const Thekedar = require('../models/Thekedar')
 
 const multer = require("multer");
 const path = require("path");
@@ -66,12 +67,7 @@ function ensureAuthenticated(req, res, next) {
     }
     res.redirect('/login');
 }
-  
-// Signup route
-router.get('/worker/signup', (req, res) => {
-    req.flash('error_msg', 'Hello Dear');
-    res.render("./users/workerSignup.ejs");
-});
+
 
 router.get('/employer/signup', (req, res) => {
   req.flash('error_msg', 'Hello Dear');
@@ -132,44 +128,10 @@ router.get('/employer/signup', (req, res) => {
 //     } 
 // });
 
-router.post("/signup/employer", async (req, res, next) => {
-  try {
-    const { name, email, password, contactNumber, company, location } = req.body;
-    const username = email;
-    const employer = new User({ name, email, username, contactNumber, role: "admin", company, location });
-    await User.register(employer, password);
-    req.login(employer, (err) => {
-      if (err) {
-        console.error("Login after signup failed:", err);
-        return next(err);
-      }
-      res.redirect("/dashboard");
-    });
-  } catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).send(error);
-  }
-});
+
 
 //Worker Registeration
-router.post("/signup/worker", async (req, res, next) => {
-  try {
-    const { name, email, password, contactNumber, skills, location } = req.body;
-    const username = email
-    const worker = new User({ name, email, username, contactNumber, role: "worker", skills: skills.split(","), location });
-    const registeredWorker = await User.register(worker, password);
-    req.login(registeredWorker, (err) => {
-      if (err) {
-        console.error("Login error after registration:", err);
-        return res.status(500).json({ error: "Login failed after registration" });
-      }
-      return res.json({ message: "Worker registered and logged in", user: req.user });
-    });
-  } catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).json({ error: error.message });
-  }
-});
+
 
 
 
@@ -206,28 +168,28 @@ router.post("/user/login", async (req, res, next) => {
                 res.redirect("/student/dashboard"); // Redirect to student page
             }
             // Send login email notification
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                host: 'smtp.gmail.com',
-                secure: false,
-                port: 587,
-                auth: {
-                    user: "lokeshbadgujjar401@gmail.com",
-                    pass: process.env.mailpass, // Securely store the email password in environment variables
-                }
-            });
+            // const transporter = nodemailer.createTransport({
+            //     service: 'gmail',
+            //     host: 'smtp.gmail.com',
+            //     secure: false,
+            //     port: 587,
+            //     auth: {
+            //         user: "lokeshbadgujjar401@gmail.com",
+            //         pass: process.env.mailpass, // Securely store the email password in environment variables
+            //     }
+            // });
 
-            try {
-                const info = await transporter.sendMail({
-                    from: "lokeshbadgujjar401@gmail.com",
-                    to: user.email,
-                    subject: 'Recent Login Activity Noticed',
-                    text: `Dear ${user.email}, a recent login has been made from your account on TheTestPulse Platform. If this wasn't you, please change your password.`,
-                });
-                console.log("Email sent: ", info.response);
-            } catch (error) {
-                console.error("Error sending email: ", error);
-            }
+            // try {
+            //     const info = await transporter.sendMail({
+            //         from: "lokeshbadgujjar401@gmail.com",
+            //         to: user.email,
+            //         subject: 'Recent Login Activity Noticed',
+            //         text: `Dear ${user.email}, a recent login has been made from your account on TheTestPulse Platform. If this wasn't you, please change your password.`,
+            //     });
+            //     console.log("Email sent: ", info.response);
+            // } catch (error) {
+            //     console.error("Error sending email: ", error);
+            // }
         });
     })(req, res, next);
 });

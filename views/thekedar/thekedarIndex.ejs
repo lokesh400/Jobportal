@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">
+    <script
+        src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000"
+        data-border-radius="medium"></script>
+</head>
+
+<body class="bg-gray-50">
+    <nav class="bg-white shadow">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center"> <img class="h-8 w-auto"
+                            src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Logo">
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium"> <i
+                            class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-8xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="p-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <img class="h-32 w-32 rounded-lg object-cover"
+                            src="https://creatie.ai/ai/api/search-image?query=A professional headshot of a male construction contractor wearing a hard hat and safety vest, looking confident and experienced, with a clean solid light gray background&width=300&height=300&orientation=squarish&flag=c1a2b097-185f-41b2-aa10-41e96d76dfc2"
+                            alt="Contractor photo">
+                    </div>
+                    <div class="ml-6 flex-1">
+                        <div class="flex items-center justify-between">
+                            <h1 class="text-2xl font-bold text-gray-900"><%= thekedar.name %></h1>
+                            <button class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium"> <i
+                                    class="fas fa-edit mr-2"></i>Edit Profile
+                            </button>
+                        </div>
+                        <div class="mt-4 text-gray-600">
+                            <p><i class="fas fa-envelope mr-2"></i><%= thekedar.email %></p>
+                            <p class="mt-2"><i class="fas fa-phone mr-2"></i><%= thekedar.mobile %></p>
+                            <p class="mt-2"><i class="fas fa-map-marker-alt mr-2"></i><%= thekedar.address %>
+                            </p>
+                            <p class="mt-2"><i class="fas fa-map-pin mr-2"></i><%= thekedar.pincode %></p>
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-sm font-medium text-gray-900">Specializations</h3>
+                            <div class="mt-2 flex flex-wrap gap-2">
+
+                                <% for(let i=0 ; i< thekedar.workTypes.length ;i++){ %>
+                                    <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-custom">
+                                    <%= thekedar.workTypes[i] %>
+                                    </span>
+                                <%}%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">Current Projects</h2> 
+                <a href="/show/thekedar/projects">
+                    <button
+                    class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium">
+                    <i class="fas fa-plus mr-2"></i>Add New Project
+                </button>
+                </a>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+                <% for(let i=0 ; i< thekedar.projects.length ;i++){ %>
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <img class="h-48 w-full object-cover"
+                            src="https://creatie.ai/ai/api/search-image?query=Modern residential construction site with steel beams and concrete foundation, showing progress of a luxury home build against a clear blue sky, professional architectural photography style&width=600&height=400&orientation=landscape&flag=2df9cb99-f819-4e38-9574-5ba615257177"
+                            alt="Project photo">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900"<%= thekedar.projects[i].title %></h3>
+                            <p class="mt-2 text-sm text-gray-600">
+                                <i class="fas fa-map-marker-alt mr-2"></i><%= thekedar.projects[i].address %>
+                            </p>
+                            <p class="mt-1 text-sm text-gray-600"> <i class="fas fa-users mr-2"></i><%= thekedar.projects[i].address %>
+                            </p>
+                            <p class="mt-4 text-sm text-gray-600"><%= thekedar.projects[i].description %></p>
+                            <br>
+                            <form action="/edit/order/<%= thekedar.projects[i]._id %>/:<%= thekedar._id %>" method="get">
+                                <button class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium"> <i
+                                    class="fas fa-user-plus mr-2"></i>Add Worker
+                              </button>
+                            </form>
+                            <form action="/change/order/status/<%= thekedar.projects[i]._id %>/<%= thekedar._id %>" method="post">
+                                <button class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium"> <i
+                                    class="fas fa-user-plus mr-2"></i>Completed
+                              </button>
+                            </form>
+                        </div>
+                    </div>
+                <%}%>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-900">Workers Management</h2>
+                        <a href="/add/workers">
+                            <button class="!rounded-button bg-custom text-white px-4 py-2 text-sm font-medium"> <i
+                                class="fas fa-user-plus mr-2"></i>Add Worker
+                          </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="px-6 py-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="text-sm text-gray-600">Total Workers: <span class="font-medium">36</span></p>
+                        <div class="relative"> <input type="text" placeholder="Search workers..."
+                                class="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-custom focus:border-custom">
+                            <i
+                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Name</th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Skill</th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Current Project</th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full"
+                                                    src="https://creatie.ai/ai/api/search-image?query=Professional headshot of a construction worker wearing safety gear, hardhat, and reflective vest, looking experienced and reliable&width=100&height=100&orientation=squarish&flag=de8dfeb9-8fb0-4067-8761-a9d78c7104b4"
+                                                    alt="">
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Michael Johnson</div>
+                                                <div class="text-sm text-gray-500">ID: W001</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap"> <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Master Carpenter
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        Luxury Residence Build
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-custom hover:text-custom-dark mr-3"> <i
+                                                class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900"> <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0"> <img class="h-10 w-10 rounded-full"
+                                                    src="https://creatie.ai/ai/api/search-image?query=Professional headshot of a female construction worker wearing safety gear, hardhat, and reflective vest, looking confident and skilled&width=100&height=100&orientation=squarish&flag=50d2b658-4ea8-4181-b343-7a819cc7aeae"
+                                                    alt=""> </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Sarah Williams</div>
+                                                <div class="text-sm text-gray-500">ID: W002</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap"> <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Electrician
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        Office Complex Renovation
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-custom hover:text-custom-dark mr-3"> <i
+                                                class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900"> <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white mt-12">
+        <div class="max-w-8xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-gray-500">&copy; 2024 Contractor Management System. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

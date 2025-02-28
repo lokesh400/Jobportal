@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thekedar Profile</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.profile-card {
+    text-align: center;
+    padding: 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 4px solid white;
+}
+
+.worker-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.worker-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.worker-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thekedar Profile</h1>
+
+        <div class="profile-card">
+            <img src="<%= thekedar.photo %>" alt="Thekedar Photo" class="profile-img">
+            <h2><%= thekedar.name %></h2>
+            <p><strong>Email:</strong> <%= thekedar.email %></p>
+            <p><strong>Mobile:</strong> <%= thekedar.mobile %></p>
+            <p><strong>Address:</strong> <%= thekedar.address %>, <%= thekedar.pincode %></p>
+        </div>
+
+        <h2>Workers Under This Thekedar</h2>
+
+        <% if (workers.length > 0) { %>
+            <div class="worker-list">
+                <% workers.forEach(worker => { %>
+                    <div class="worker-card">
+                        <img src="<%= worker.photo %>" alt="Worker Photo" class="worker-img">
+                        <h3><%= worker.name %></h3>
+                        <p><strong>Mobile:</strong> <%= worker.mobile %></p>
+                        <p><strong>Address:</strong> <%= worker.address %>, <%= worker.pincode %></p>
+                        <p><strong>Skills:</strong> <%= worker.skills.join(", ") %></p>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No workers assigned yet.</p>
+        <% } %>
+    </div>
+</body>
+</html>

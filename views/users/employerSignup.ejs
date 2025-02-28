@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Signup</title>
+    <title>Worker Signup</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,31 +71,35 @@
 <body>
     <div class="container">
         <h2>Employer Signup</h2>
+
         <form action="/signup/employer" method="POST">
             <label for="name">Full Name</label>
             <input type="text" name="name" required>
 
             <label for="email">Email</label>
             <input type="email" name="email" required>
-
-            <label for="username">Username</label>
-            <input type="text" name="username" required>
-
+            
             <label for="password">Password</label>
             <input type="password" name="password" required>
 
             <label for="contactNumber">Contact Number</label>
-            <input type="text" name="contactNumber" required>
+            <input type="text" name="mobile" required>
 
-            <label for="company">Company Name</label>
+            <label for="skills">Address</label>
+            <input type="text" name="address" required>
+
+            <label for="skills">Pincode</label>
+            <input type="text" name="pincode" required>
+
+            <label for="pincode">company</label>
             <input type="text" name="company" required>
 
-            <label for="location">Location</label>
-            <input type="text" name="location" required>
+            <label for="pincode">photo</label>
+            <input type="text" name="photo" required>
 
             <button type="submit">Signup</button>
         </form>
-        <p>Want to signup as a worker? <a href="/signup/worker">Click here</a></p>
+        <p>Want to signup as an employer? <a href="/signup/employer">Click here</a></p>
     </div>
 </body>
 
