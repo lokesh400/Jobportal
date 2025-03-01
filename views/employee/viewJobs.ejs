@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <style>
+        /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Heading */
+.heading {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 300px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+/* Job Listings */
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Job Card */
+.job-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.job-card:hover {
+    transform: scale(1.05);
+}
+
+/* Job Card Text */
+.job-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.job-card p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* Distance */
+.distance {
+    font-weight: bold;
+    color: #28a745;
+}
+
+/* Button */
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* No Jobs Message */
+.no-jobs {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="heading">Find Your Next Job</h2>
+
+        <!-- Search Bar -->
+        <form action="/jobs/search" method="GET" class="search-bar">
+            <input type="text" name="pincode" placeholder="Enter Pincode" required>
+            <button type="submit">Search Jobs</button>
+        </form>
+
+        <!-- Job Listings -->
+        <div id="jobList">
+            <% if (jobs.length > 0) { %>
+                <div class="job-grid">
+                    <% jobs.forEach(job => { %>
+                        <div class="job-card">
+                            <h3><%= job.title %></h3>
+                            <p><strong>📍 Address:</strong> <%= job.address %></p>
+                            <p><strong>📜 Description:</strong> <%= job.description %></p>
+                            <p><strong>📌 Pincode:</strong> <%= job.pincode %></p>
+                            <% if (job.distance) { %>
+                                <p class="distance"><strong>📏 Distance:</strong> <%= (job.distance / 1000).toFixed(2) %> km away</p>
+                            <% } %>
+                            <a href="/job/<%= job._id %>" class="btn">View Details</a>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p class="no-jobs">🚫 No jobs available at the moment.</p>
+            <% } %>
+        </div>
+    </div>
+
+</body>
+</html>

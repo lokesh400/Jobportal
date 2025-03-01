@@ -10,8 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
-    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="medium"></script>
+    <script
+        src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000"
+        data-border-radius="medium"></script>
     <style>
         body {
             background-color: #111;
@@ -71,6 +73,7 @@
         .bg-custom {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
         }
+
         .hero {
             position: relative;
             min-height: 100vh;
@@ -100,12 +103,150 @@
             opacity: 0.3;
         }
 
+        .scroll-container {
+            width: 100vw;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .scroll-content {
+            display: flex;
+            gap: 20px;
+            animation: scroll 10s linear infinite;
+        }
+
+        .card {
+            width: 300px;
+            height: 300px;
+            overflow: none;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section Styling */
+        .job-section {
+            background-image: url('/images/jobs-bg.jpg');
+            /* Replace with actual image */
+            background-size: cover;
+            background-position: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+        }
+
+        /* Scroll Container */
+        .scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+        }
+
+        /* Scroll Content */
+        .scroll-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Job Card */
+        .job-card {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            background: rgba(57, 51, 51, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Job Image */
+        .job-image img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        /* Job Info */
+        .job-info {
+            padding: 10px;
+        }
+
+        .job-title {
+            color: red;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        /* Apply Button */
+        .apply-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .apply-btn:hover {
+            background-color: #0056b3;
+        }
+
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Clone the content to create an infinite effect */
+        .scroll-content::after {
+            content: "";
+            display: flex;
+            gap: 20px;
+        }
+
         @keyframes moveAround {
-            0% { top: 5%; left: 5%; }
-            25% { top: 5%; left: 85%; }
-            50% { top: 85%; left: 85%; }
-            75% { top: 85%; left: 5%; }
-            100% { top: 5%; left: 5%; }
+            0% {
+                top: 5%;
+                left: 5%;
+            }
+
+            25% {
+                top: 5%;
+                left: 85%;
+            }
+
+            50% {
+                top: 85%;
+                left: 85%;
+            }
+
+            75% {
+                top: 85%;
+                left: 5%;
+            }
+
+            100% {
+                top: 5%;
+                left: 5%;
+            }
         }
     </style>
 </head>
@@ -113,6 +254,9 @@
 <body>
     <!-- Sticky Header -->
     <div class="sticky-header">
+
+        <img src="images/logo.png" alt="">
+
         <a href="#features">Features</a>
         <a href="#about">About</a>
         <a href="#testimonials">Testimonials</a>
@@ -121,21 +265,22 @@
     </div>
 
     <div class="container-fluid">
-       
+
         <div class="container-fluid">
             <!-- Hero Section -->
             <div class="section hero" data-aos="fade-up">
                 <div class="moving-ball"></div>
                 <h1 class="display-4 fw-bold text-primary">Solving Unskilled Labor Instability</h1>
                 <p class="mt-3">A tech-driven platform enhancing job stability, accountability, and transparency.</p>
-                
+
             </div>
         </div>
         <!-- Features Section -->
         <div class="bg-gray-50 py-12 sm:py-16" id="features">
             <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="lg:text-center">
-                    <h2 class="text-base text-custom font-semibold tracking-wide uppercase" data-aos="fade-down"> Features</h2>
+                    <h2 class="text-base text-custom font-semibold tracking-wide uppercase" data-aos="fade-down">
+                        Features</h2>
                     <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">
                         Smart Solutions for Modern Workforce
                     </p>
@@ -144,7 +289,8 @@
                 <div class="mt-10">
                     <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
                         <div class="relative" data-aos="fade-up">
-                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
+                            <div
+                                class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
                                 <i class="fas fa-robot text-xl"></i>
                             </div>
                             <p class="ml-16 text-lg leading-6 font-medium text-gray-900">AI Matching System</p>
@@ -155,7 +301,8 @@
                         </div>
 
                         <div class="relative" data-aos="fade-up" data-aos-delay="200">
-                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
+                            <div
+                                class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
                                 <i class="fas fa-link text-xl"></i>
                             </div>
                             <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Blockchain Verification</p>
@@ -165,7 +312,8 @@
                         </div>
 
                         <div class="relative" data-aos="fade-up" data-aos-delay="400">
-                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
+                            <div
+                                class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-custom text-white">
                                 <i class="fas fa-mobile-alt text-xl"></i>
                             </div>
                             <p class="ml-16 text-lg leading-6 font-medium text-gray-900">Mobile Access</p>
@@ -179,28 +327,40 @@
         </div>
 
         <div class="container mt-5">
-            <h1 class="text-center mb-4">Current Openings</h1>
-            
-            <div class="row">
-                <% jobs.forEach(job => { %>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                        <div class="card text-white bg-dark shadow-lg">
-                            <div class="card-body">
-                                <h5 class="card-title">Tilte:<%= job.title %></h5>
-                                <p class="card-text"><strong>Description:</strong> <%= job.description %></p>
-                                <p class="card-text"><strong>Location:</strong> <%= job.location %></p>
-                                <p class="card-text"><strong>Pincode:</strong> <%= job.pincode %></p>
-                                <p class="card-text"><strong>Assigned:</strong> <%= job.assigned %></p>
+            <h1 class="text-center " style="font-size: 50px;" >🚀 Current Openings</h1>
+            <div class="job-section">
+                <div class="scroll-container">
+                    <div class="scroll-content">
+                        <% jobs.forEach(job=> { %>
+                            <div class="job-card">
+                                <div class="job-image">
+                                    <img src="/images/job-placeholder.jpg" alt="Job Image">
+                                </div>
+                                <div class="job-info">
+                                    <h3 class="job-title">
+                                        <%= job.title %>
+                                    </h3>
+                                    <p><strong>📜 Description:</strong>
+                                        <%= job.description %>
+                                    </p>
+                                    <p><strong>📍 Location:</strong>
+                                        <%= job.address %>
+                                    </p>
+                                    <p><strong>📌 Pincode:</strong>
+                                        <%= job.pincode %>
+                                    </p>
+                                        <br>
+                                    <form action="/apply/this/<%= job._id %>" method="POST">
+                                        <button class="apply-btn">Apply Now</button>
+                                    </form>
+                                </div>
                             </div>
-                            <form  class="btn btn-primary mt-4" action="/apply/this/<%= job._id %>" method="POST">
-                                <button  > Apply For It </button>
-                            </form>
-                        </div>
+                            <% }); %>
                     </div>
-                <% }); %>
+                </div>
             </div>
         </div>
-    
+
 
         <!-- Testimonials Section -->
         <div class="bg-gray-800 py-12 sm:py-16" id="testimonials">
@@ -214,11 +374,13 @@
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     <div class="testimonial-card" data-aos="fade-up">
-                        <p class="text-lg text-gray-300">"This platform has transformed my job search experience. I found a job that fits my skills perfectly!"</p>
+                        <p class="text-lg text-gray-300">"This platform has transformed my job search experience. I
+                            found a job that fits my skills perfectly!"</p>
                         <p class="mt-4 text-sm text-gray-500">- Alex R.</p>
                     </div>
                     <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                        <p class="text-lg text-gray-300">"The blockchain verification gives me confidence in the hiring process. Highly recommend!"</p>
+                        <p class="text-lg text-gray-300">"The blockchain verification gives me confidence in the hiring
+                            process. Highly recommend!"</p>
                         <p class="mt-4 text-sm text-gray-500">- Maria S.</p>
                     </div>
                     <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
@@ -242,17 +404,22 @@
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     <div class="bg -white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up">
                         <h3 class="text-lg font-semibold">The Future of Work</h3>
-                        <p class="mt-2 text-gray-600">Exploring how technology is reshaping the job market and what it means for workers.</p>
+                        <p class="mt-2 text-gray-600">Exploring how technology is reshaping the job market and what it
+                            means for workers.</p>
                         <a href="#" class="text-blue-500 hover:underline mt-4 block">Read More</a>
                     </div>
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up"
+                        data-aos-delay="100">
                         <h3 class="text-lg font-semibold">Building Trust in the Workplace</h3>
-                        <p class="mt-2 text-gray-600">Understanding the importance of transparency and accountability in labor relations.</p>
+                        <p class="mt-2 text-gray-600">Understanding the importance of transparency and accountability in
+                            labor relations.</p>
                         <a href="#" class="text-blue-500 hover:underline mt-4 block">Read More</a>
                     </div>
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6" data-aos="fade-up"
+                        data-aos-delay="200">
                         <h3 class="text-lg font-semibold">Navigating Job Instability</h3>
-                        <p class="mt-2 text-gray-600">Tips and strategies for workers to manage and thrive in an unstable job market.</p>
+                        <p class="mt-2 text-gray-600">Tips and strategies for workers to manage and thrive in an
+                            unstable job market.</p>
                         <a href="#" class="text-blue-500 hover:underline mt-4 block">Read More</a>
                     </div>
                 </div>
@@ -263,7 +430,8 @@
         <div class="section bg-dark" id="about" data-aos="fade-right" data-aos-delay="100">
             <div class="container">
                 <h2 class="text-primary">About Our Initiative</h2>
-                <p class="mt-3">We aim to provide a digital solution that enhances job security and employer-worker trust.</p>
+                <p class="mt-3">We aim to provide a digital solution that enhances job security and employer-worker
+                    trust.</p>
             </div>
         </div>
 
@@ -281,19 +449,25 @@
         <div class="max-w-8xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                 <div class="space-y-8 xl:col-span-1">
-                    <img class="h-10" src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Company name">
-                    <p class="text-gray-300 text-base">Making workforce management smarter, fairer, and more efficient for everyone.</p>
+                    <img class="h-10" src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png"
+                        alt="Company name">
+                    <p class="text-gray-300 text-base">Making workforce management smarter, fairer, and more efficient
+                        for everyone.</p>
                     <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right"
+                            data-aos-delay="100">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right"
+                            data-aos-delay="100">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right"
+                            data-aos-delay="100">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right" data-aos-delay="100">
+                        <a href="#" class="text-gray-400 hover:text-gray-300" data-aos="fade-right"
+                            data-aos-delay="100">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
@@ -384,4 +558,5 @@
         AOS.init({ duration: 1000, once: true });
     </script>
 </body>
+
 </html>

@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
 
-const JobSchema = new mongoose.Schema(
-  {
+const jobSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    employerId: { type:String },
-    location: { type: String, required: true },
-    pincode: {type:String},
-    assigned: {type:String,default:"no"},
-    assignedTo : {type:String}
-  },
-  { timestamps: true }
-);
+    employerId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    pincode: { type: String, required: true },
+    address:{ type:String },
+    location: {
+        type: { type: String, default: "Point" },
+        coordinates: { type: [Number], index: "2dsphere" } // [longitude, latitude]
+    }
+});
 
-module.exports = mongoose.model("Job", JobSchema);
+module.exports = mongoose.model("Job", jobSchema);

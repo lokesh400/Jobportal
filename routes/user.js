@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/User');
-// const Student = require('../models/Student');
 const passport = require("passport");
 const nodemailer = require('nodemailer');
 const passportLocalMongoose = require('passport-local-mongoose');
@@ -68,72 +67,10 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/login');
 }
 
-
 router.get('/employer/signup', (req, res) => {
   req.flash('error_msg', 'Hello Dear');
   res.render("./users/employerSignup.ejs");
 });
-
-// const { name, email, username, password, contactNumber, company, location } = req.body;
-
-//     const employer = new Employer({ name, email, username, contactNumber, role: "employer", company, location });
-
-// router.post('/signup', async (req, res) => {
-//     const {name,email, password ,confirmpassword,otp,contactNumber} = req.body;
-//     const role = "student";
-//     const username = email;
-//     // let user = await Otp.findOne({ email });
-//     if(password==confirmpassword&&otp==user.otp){
-//         const newUser = new User({name,role, email, username,contactNumber });
-//     try {
-//         // Attempt to register the new user
-//         const registeredUser = await User.register(newUser, password);
-//         //sendimg greeting mail
-//         const transporter = nodemailer.createTransport({
-//             service:'gmail',
-//             host:'smtp.gmail.com',
-//             secure:false,
-//             port:587,
-//             auth:{
-//              user:"lokeshbadgujjar401@gmail.com",
-//              pass:process.env.mailpass
-//             }
-//            });
-        
-//            try{
-//               const mailOptions = await transporter.sendMail({
-//                 from:"lokeshbadgujjar401@gmail.com",
-//                 to: `${email}`,
-//                 subject: 'Welcome to TheTestPulseFamily',
-//                 text: `Dear ${name} welcome to TheTestPulse Family.`,
-//             });
-//         } catch(error){
-//             transporter.sendMail(mailOptions,(error,info)=>{
-//                 if(error){
-//                     console.log(error)
-//                 }
-//                 else{
-//                     console.log(info+response);
-//                 }
-//             })
-//         }
-//         // Redirect to login page after successful registration
-//         res.redirect('/login');
-//     } catch (error) {
-//        res.send(error)
-//     }
-//     }
-//     else{
-//         res.render("./users/signup.ejs", {error : "password do not match"});
-//     } 
-// });
-
-
-
-//Worker Registeration
-
-
-
 
 // Login route
 router.get("/login", (req, res) => {
@@ -163,33 +100,12 @@ router.post("/user/login", async (req, res, next) => {
             // Flash a success message and redirect based on user role
             req.flash('success_msg', 'You have successfully logged in!');
             if (user.role === 'admin') {
-                res.redirect("/admin"); // Redirect to admin dashboard
-            } else {
+                res.redirect("/thekedar"); // Redirect to admin dashboard
+            }else if (user.role === 'thekedar') {
+              res.redirect("/admin"); // Redirect to admin dashboard
+             } else {
                 res.redirect("/student/dashboard"); // Redirect to student page
-            }
-            // Send login email notification
-            // const transporter = nodemailer.createTransport({
-            //     service: 'gmail',
-            //     host: 'smtp.gmail.com',
-            //     secure: false,
-            //     port: 587,
-            //     auth: {
-            //         user: "lokeshbadgujjar401@gmail.com",
-            //         pass: process.env.mailpass, // Securely store the email password in environment variables
-            //     }
-            // });
-
-            // try {
-            //     const info = await transporter.sendMail({
-            //         from: "lokeshbadgujjar401@gmail.com",
-            //         to: user.email,
-            //         subject: 'Recent Login Activity Noticed',
-            //         text: `Dear ${user.email}, a recent login has been made from your account on TheTestPulse Platform. If this wasn't you, please change your password.`,
-            //     });
-            //     console.log("Email sent: ", info.response);
-            // } catch (error) {
-            //     console.error("Error sending email: ", error);
-            // }
+             }
         });
     })(req, res, next);
 });

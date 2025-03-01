@@ -89,11 +89,9 @@ router.get('/worker/index', async (req, res) => {
 router.get("/certificate/:id", async (req, res) => {
   try {
       const certificate = await Certificate.findById(req.params.id).populate("workerId postId");
-
       if (!certificate) {
           return res.status(404).send("Certificate not found");
       }
-
       res.render("employee/certificateDetails.ejs", { certificate });
   } catch (error) {
       console.error(error);

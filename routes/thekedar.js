@@ -100,7 +100,8 @@ router.post("/signup/thekedar", async (req, res, next) => {
           console.error("Login error after registration:", err);
           return res.status(500).json({ error: "Login failed after registration" });
         }
-        return res.json({ message: "Worker registered and logged in", user: req.user });
+        req.flash('success',"registered successfully")
+        res.redirect('/')
       });
     } catch (error) {
       console.error("Signup error:", error);
@@ -135,7 +136,8 @@ router.get("/add/workers", async (req, res) => {
           thekedar.workers.push(workerId);
           await thekedar.save();
   
-          res.json({ success: true, message: "Worker added successfully", thekedar });
+          req.flash('success',"added successfully")
+          res.redirect('/thekedar');
   
       } catch (error) {
           res.status(500).json({ success: false, message: error.message });
@@ -214,7 +216,8 @@ router.post("/thekedar/:id/projects/add", async (req, res) => {
         thekedar.projects.push(newProject);
         await thekedar.save();
 
-        res.redirect(`/thekedar/${thekedar._id}/projects`);
+        req.flash('success',"added successfully successfully")
+        res.redirect(`/thekedar`);
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -278,12 +281,8 @@ router.post("/change/order/status/:projectId/:thekedarId", async (req, res) => {
 
         const validCertificates = workerCertificates.filter(cert => cert !== null);
         await Certificate.insertMany(validCertificates);
-        res.status(200).json({
-            success: true,
-            message: "Project marked as completed, workers updated, and certificates generated",
-            thekedarCertificate,
-            workerCertificates: validCertificates
-        });
+        req.flash('success',"certificated generated successfully")
+        res.redirect('/thekedar')
 
     } catch (error) {
         console.error("Error updating project and generating certificates:", error);
@@ -297,8 +296,7 @@ router.get("/edit/order/:projectId/:thekedarId", async (req, res) => {
     try {
         let { projectId, thekedarId } = req.params;
         thekedarId = thekedarId.replace(/^:/, ""); // Remove ":" at the start if present
-
-        // Find Thekedar
+        // Find Tekedar
         const thekedar = await Thekedar.findById(thekedarId);
         if (!thekedar) {
             return res.status(404).json({ success: false, message: "Thekedar not found" });
@@ -311,9 +309,7 @@ router.get("/edit/order/:projectId/:thekedarId", async (req, res) => {
         const workers = await Promise.all(
             thekedar.workers.map(workerId => Worker.findById(workerId))
         );
-        console.log(workers);
         res.render("thekedar/addWorkerToProject.ejs", { workers,thekedarId,projectId });
-
     } catch (error) {
         console.error("Error fetching workers:", error);
         res.status(500).json({ success: false, message: error.message });
@@ -334,7 +330,7 @@ router.get("/edit/order/:projectId/:thekedarId", async (req, res) => {
         );
 
         if (!thekedar) return res.status(404).json({ success: false, message: "Thekedar or Project not found" });
-
+        req.flash('success',"worker added successfully")
         res.redirect(`/some/success/page`);
     } catch (error) {
         console.error("Error adding workers:", error);

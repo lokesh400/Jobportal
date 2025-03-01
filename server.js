@@ -10,11 +10,13 @@ const passport = require("passport");
 const localStrategy = require("passport-local");
 const methodOverride = require("method-override");
 const { jsPDF } = require("jspdf");
+const cors = require("cors");
 
 const http = require("http");
 const socketIo = require("socket.io");
 
 const app = express();
+app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -100,6 +102,7 @@ app.use("/", thekedarrouter);
 app.get("/", async (req, res) => {
   try {
     const jobs = await Job.find();
+    console.log(jobs);
     res.render("index",{jobs});
   } catch (error) {
     console.log(error);

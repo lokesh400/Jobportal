@@ -6,6 +6,7 @@ const Employer = require('../models/Employer');
 const Job = require('../models/Job');
 const Application = require('../models/Application');
 const Worker = require('../models/Worker');
+const axios = require("axios");
 
 const multer = require("multer");
 const path = require("path");
@@ -95,6 +96,7 @@ router.post('/apply/this/:id', async (req, res) => {
       workerId: user._id,
       jobId: id,
     }).save();
+    req.flash('success_msg',"Applied Successfully");
     res.redirect('/');
   } catch (error) {
     console.error(error);
@@ -107,14 +109,11 @@ router.get('/opening/:id', async (req, res) => {
   const { id } = req.params;
   try {
       const objectId = new mongoose.Types.ObjectId(id);
-
       // Fetch applications and populate both workerId and jobId
       const applications = await Application.find({ jobId: objectId })
           .populate("workerId")
           .populate("jobId");
-
       console.log("Applications:", applications); // Debugging log
-
       res.render("employer/jobRequest.ejs", { applications });
   } catch (error) {
       console.error(error);
@@ -155,7 +154,8 @@ router.post("/requests/accept/:id", async (req, res) => {
         $push: { projects: { ...projectData, thisProjectWorkers: [worker?._id] } },
       });
     }
-    res.redirect("/jobs/requests");
+    req.flash('success_msg',"Assignes Successfully Successfully");
+    res.redirect("/admin");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error accepting request");
@@ -186,7 +186,8 @@ router.post("/signup/new/employer", async (req, res, next) => {
         console.error("Login after signup failed:", err);
         return next(err);
       }
-      res.redirect("/dashboard");
+      req.flash('success_msg',"registred successfully");
+      res.redirect("/");
     });
   } catch (error) {
     console.error("Signup error:", error);
@@ -200,31 +201,104 @@ router.get('/new/opening', (req, res) => {
   res.render("employer/createJob.ejs");
 });
 
+async function getCoordinatesFromPincode(pincode) {
+  try {
+      const response = await axios.get(`https://nominatim.openstreetmap.org/search?postalcode=${pincode}&countrycodes=IN&format=json`);
+      
+      if (response.data.length > 0) {
+          return {
+              latitude: parseFloat(response.data[0].lat),
+              longitude: parseFloat(response.data[0].lon)
+          };
+      }
+      return null;
+  } catch (error) {
+      console.error("❌ Error fetching coordinates:", error);
+      return null;
+  }
+}
+
 router.post("/create/new/opening", ensureAuthenticated, async (req, res) => {
   try {
-      const { title, description, location, pincode } = req.body;
+      const { title, description, pincode,address } = req.body;
       const user = await User.findById(req.user.id);
-      const mail = user.email;
-      const creater = await Employer.findOne({email:mail})
+      const employer = await Employer.findOne({ email: user.email });
+      if (!employer) {
+          return res.status(404).json({ error: "Employer not found" });
+      }
+      const coordinates = await getCoordinatesFromPincode(pincode);
+      if (!coordinates) {
+          return res.status(400).json({ error: "Invalid Pincode. Unable to fetch coordinates." });
+      }
       // Create a new job instance
       const newJob = new Job({
           title,
+          address,
           description,
-          employerId:creater.id,
-          location,
+          employerId: employer.id,
           pincode,
-          mobile:creater.mobile,
+          mobile: employer.mobile,
+          location: {
+              type: "Point",
+              coordinates: [coordinates.longitude, coordinates.latitude] // [lng, lat]
+          }
       });
-
       // Save job to database
       await newJob.save();
-      
-      res.status(201).json({ message: "Job posted successfully!", job: newJob });
+      req.flash('success_msg',"Applied Successfully");
+      res.redirect('/')
   } catch (error) {
-      console.error("Error creating job:", error);
+      console.error("❌ Error creating job:", error);
       res.status(500).json({ error: "Server error. Please try again later." });
   }
 });
+
+router.get('/jobs', async (req, res) => {
+  try {
+      const jobs = await Job.find({}); // Fetch all jobs initially
+      res.render('employee/viewJobs.ejs', { jobs, pincode: null });
+  } catch (error) {
+      console.error("❌ Error fetching jobs:", error);
+      req.flash('error_msg', 'Something went wrong.');
+      res.redirect('/');
+  }
+});
+
+// Search Jobs by Pincode
+router.get('/jobs/search', async (req, res) => {
+  try {
+      const { pincode } = req.query;
+
+      if (!pincode) {
+          req.flash('error_msg', 'Please enter a valid pincode.');
+          return res.redirect('/jobs');
+      }
+      // Convert Pincode to Coordinates
+      const coordinates = await getCoordinatesFromPincode(pincode);
+      if (!coordinates) {
+          req.flash('error_msg', 'Invalid Pincode. Try another.');
+          return res.redirect('/jobs');
+      }
+      // Find Nearby Jobs Using MongoDB's Geospatial Query
+      const jobs = await Job.aggregate([
+          {
+              $geoNear: {
+                  near: { type: "Point", coordinates: [coordinates.longitude, coordinates.latitude] },
+                  distanceField: "distance",
+                  maxDistance: 50000, // 5 KM radius
+                  spherical: true
+              }
+          }
+      ]);
+
+      res.render('employee/viewJobs.ejs', { jobs, pincode });
+  } catch (error) {
+      console.error("❌ Error in job search:", error);
+      req.flash('error_msg', 'Something went wrong.');
+      res.redirect('/jobs');
+  }
+});
+
 
 module.exports = router;
 
