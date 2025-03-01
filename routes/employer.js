@@ -140,10 +140,11 @@ router.post("/requests/accept/:id", async (req, res) => {
     await application.save();
     // Create project data
     const projectData = {
+      originalJobId:id,
       title: application.jobId.title,
       address: application.jobId.location,
       pincode: application.jobId.pincode,
-      photo: "", // Add photo if needed
+      photo: "",
       description: application.jobId.description,
     };
     // Assign job to only one user (either Worker or Thekedar)
@@ -298,7 +299,6 @@ router.get('/jobs/search', async (req, res) => {
       res.redirect('/jobs');
   }
 });
-
 
 module.exports = router;
 

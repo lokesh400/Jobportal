@@ -88,7 +88,7 @@ router.get('/worker/index', async (req, res) => {
 //Particular certificate
 router.get("/certificate/:id", async (req, res) => {
   try {
-      const certificate = await Certificate.findById(req.params.id).populate("workerId postId");
+      const certificate = await Certificate.findById(req.params.id)
       if (!certificate) {
           return res.status(404).send("Certificate not found");
       }
@@ -96,6 +96,17 @@ router.get("/certificate/:id", async (req, res) => {
   } catch (error) {
       console.error(error);
       res.status(500).send("Server Error");
+      const mongoose = require("mongoose");
+      const CertificateSchema = new mongoose.Schema({
+          workerId: { type: String, required: true },
+          name: { type: String },
+          postId: { type: String, required: true },
+          startingDate: { type: Date, required: true },
+          endingDate: { type: Date, default: Date.now }
+      });
+      
+      module.exports = mongoose.model("Certificate", CertificateSchema);
+      
   }
 });
 

@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const projectsSchema = new mongoose.Schema(
     {
-      thisProjectWorkers:{type:Array},  
+      thisProjectWorkers:{type:Array},
+      originalJobId:String,    
       title: {type: String},
       isCompleted:{type:String,default:"no"},
       address: {type: String},

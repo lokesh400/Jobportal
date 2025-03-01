@@ -100,11 +100,11 @@ router.post("/user/login", async (req, res, next) => {
             // Flash a success message and redirect based on user role
             req.flash('success_msg', 'You have successfully logged in!');
             if (user.role === 'admin') {
-                res.redirect("/thekedar"); // Redirect to admin dashboard
+                res.redirect("/admin"); // Redirect to admin dashboard
             }else if (user.role === 'thekedar') {
-              res.redirect("/admin"); // Redirect to admin dashboard
+              res.redirect("/thekedar"); // Redirect to admin dashboard
              } else {
-                res.redirect("/student/dashboard"); // Redirect to student page
+                res.redirect("/worker/index"); // Redirect to student page
              }
         });
     })(req, res, next);

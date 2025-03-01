@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const projectsSchema = new mongoose.Schema(
     {
+      originalJobId:String,  
       title: {type: String },
       address: {type: String },
       pincode: {type:String },
