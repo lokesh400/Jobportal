@@ -128,7 +128,7 @@
                 <div class="moving-ball"></div>
                 <h1 class="display-4 fw-bold text-primary">Solving Unskilled Labor Instability</h1>
                 <p class="mt-3">A tech-driven platform enhancing job stability, accountability, and transparency.</p>
-                <a href="#features" class="btn btn-primary mt-4">Explore Features</a>
+                
             </div>
         </div>
         <!-- Features Section -->
@@ -177,6 +177,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">Current Openings</h1>
+            
+            <div class="row">
+                <% jobs.forEach(job => { %>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="card text-white bg-dark shadow-lg">
+                            <div class="card-body">
+                                <h5 class="card-title">Tilte:<%= job.title %></h5>
+                                <p class="card-text"><strong>Description:</strong> <%= job.description %></p>
+                                <p class="card-text"><strong>Location:</strong> <%= job.location %></p>
+                                <p class="card-text"><strong>Pincode:</strong> <%= job.pincode %></p>
+                                <p class="card-text"><strong>Assigned:</strong> <%= job.assigned %></p>
+                            </div>
+                            <form  class="btn btn-primary mt-4" action="/apply/this/<%= job._id %>" method="POST">
+                                <button  > Apply For It </button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    
 
         <!-- Testimonials Section -->
         <div class="bg-gray-800 py-12 sm:py-16" id="testimonials">

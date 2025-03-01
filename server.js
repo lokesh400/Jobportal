@@ -29,6 +29,7 @@ const { error } = require("console");
 const sessionOptions = require("./config/sessionConfig");
 
 const User = require("./models/User");
+const Job = require("./models/Job");
 const Message = require("./models/Message"); // Ensure the correct path
 
 // Connect to MongoDB
@@ -98,7 +99,8 @@ app.use("/", thekedarrouter);
 // Home route
 app.get("/", async (req, res) => {
   try {
-    res.render("index");
+    const jobs = await Job.find();
+    res.render("index",{jobs});
   } catch (error) {
     console.log(error);
   }
